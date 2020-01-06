@@ -12,11 +12,6 @@
 
 int main() {
 
-    if ((int)strlen(PASSWORD) != WORD_SIZE) {
-        fprintf(stderr, "[ⅹ] password must be 8 characters long!\n");
-        exit (EXIT_FAILURE);
-    }
-
     printf("[*] target: %s\n", PASSWORD);
     printf("[*] salt: %s\n", SALT);
 
@@ -25,7 +20,7 @@ int main() {
 
     printf("[*] iterating over dictionary...\n");
     FILE* dictionary;
-    if((dictionary = fopen(DICTIONARY, "r")) == NULL){
+    if((dictionary = fopen(DICTIONARY, "r")) == NULL) {
         fprintf(stderr, "[ⅹ] error: dictionary not found\n");
         exit (EXIT_FAILURE);
     }
