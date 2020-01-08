@@ -2,16 +2,21 @@
 
 from matplotlib import pyplot as plt
 
-# SEQUENZIALE
+# SEQUENZIALE vs ALTRI
 
 plt.figure(figsize=(8,5))
 words = ['sirpizza', '3kingdom', 'tyleisha', 'marumari', 'giacomix', 'dbcookie', 'Yessssss', 'Mypaypa1', '6Melissa', '1Mazzola']
-times = [0.34943, 1.03047, 1.54878, 2.76967, 4.02124, 4.74491, 5.25437, 5.79248, 6.16216, 8.07845]
-plt.plot(words, times)
-plt.ylabel('Tempi versione sequenziali (s)')
+times_seq = [0.34943, 1.03047, 1.54878, 2.76967, 4.02124, 4.74491, 5.25437, 5.79248, 6.16216, 8.07845]
+times_cuda = [0.66888, 0.65650, 0.67129, 0.64342, 0.66234, 0.64568, 0.67041, 0.64521, 0.64259, 0.67682]
+times_openmp = [0.895581, 0.301136, 1.4179, 0.182783, 1.91081, 0.996816, 0.986832, 2.00602, 1.93184, 1.41129]
+plt.plot(words, times_seq)
+plt.plot(words, times_cuda)
+plt.plot(words, times_openmp)
+plt.ylabel('Tempi (s)')
+plt.gca().legend(('Sequenziale','CUDA', 'OpenMP'), loc='upper right')
 plt.tight_layout()
 plt.grid()
-plt.savefig('tempi_seq.png')
+plt.savefig('tempi.png')
 
 # CUDA
 
