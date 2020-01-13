@@ -6,14 +6,14 @@ from matplotlib import pyplot as plt
 
 plt.figure(figsize=(8,5))
 words = ['sirpizza', '3kingdom', 'tyleisha', 'marumari', 'giacomix', 'dbcookie', 'Yessssss', 'Mypaypa1', '6Melissa', '1Mazzola']
-times_seq = [0.34943, 1.03047, 1.54878, 2.76967, 4.02124, 4.74491, 5.25437, 5.79248, 6.16216, 8.07845]
+times_seq = [0.231341, 0.740162, 1.099185, 2.057434, 2.651718, 3.041978, 3.701794, 3.890734, 4.635460, 5.194617]
 times_cuda = [0.681015, 0.641720, 0.644346, 0.645845, 0.643087, 0.643216, 0.646316, 0.647170, 0.645394, 0.647059] # 128 blocchi / thread per blocco
 times_openmp = [0.895581, 0.301136, 1.4179, 0.182783, 1.91081, 0.996816, 0.986832, 2.00602, 1.93184, 1.41129] # 8 thread
 plt.plot(words, times_seq)
 plt.plot(words, times_cuda)
 plt.plot(words, times_openmp)
 plt.ylabel('Tempi (s)')
-plt.gca().legend(('Sequenziale','CUDA', 'OpenMP'), loc='upper right')
+plt.gca().legend(('Sequenziale','CUDA', 'OpenMP'), loc='upper left')
 plt.tight_layout()
 plt.grid()
 plt.savefig('tempi.png')
@@ -24,15 +24,15 @@ plt.figure(figsize=(8,5))
 words = ['3kingdom', 'giacomix', '6Melissa']
 blocks = [8, 16, 32, 64, 128, 256, 512]
 
-seq_3kingdom=1.03047
+seq_3kingdom=times_seq[1]
 tempi_3kingdom = [8.628553, 4.307805, 2.062298, 1.095152, 0.646086, 0.647663, 0.650296]
 speedup_3kingdom = [seq_3kingdom/i for i in tempi_3kingdom]
 
-seq_giacomix=4.02124
+seq_giacomix=times_seq[4]
 tempi_giacomix = [8.631157, 4.322363, 2.067904, 1.096998, 0.646703, 0.649602, 0.652175]
 speedup_giacomix = [seq_giacomix/i for i in tempi_giacomix]
 
-seq_6Melissa=6.16216
+seq_6Melissa=times_seq[8]
 tempi_6Melissa = [8.625993, 4.316520, 2.065404, 1.095974, 0.646805, 0.650377, 0.651141]
 speedup_6Melissa = [seq_6Melissa/i for i in tempi_6Melissa]
 
