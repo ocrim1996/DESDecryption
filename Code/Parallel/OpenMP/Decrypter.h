@@ -9,11 +9,15 @@ using namespace std;
 
 class Decrypter {
 public:
-    Decrypter(const string& dictionaryPath, const string& password, const string& salt);
-    void decrypt(int threads);
+    Decrypter(const string& dictionaryPath, const string& salt);
+    double decrypt(int threads);
 
 private:
     string encrypted;
+public:
+    void setPassword(const string &password);
+
+private:
     string salt;
     vector<string> fullDictionary;
 };

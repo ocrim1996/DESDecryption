@@ -10,11 +10,8 @@
 
 using namespace std;
 
-Decrypter::Decrypter(const string& dictionaryPath, const string& password, const string& salt) {
+Decrypter::Decrypter(const string& dictionaryPath, const string& salt) {
     this->salt = salt;
-    this->encrypted = strdup(crypt(password.c_str(), salt.c_str()));
-
-    cout << "[*] Encrypted password: " << this->encrypted << "\n" << endl;
 
     string line;
     ifstream dictionary(dictionaryPath);
@@ -30,7 +27,7 @@ Decrypter::Decrypter(const string& dictionaryPath, const string& password, const
     dictionary.close();
 }
 
-void Decrypter::decrypt(int threads) {
+double Decrypter::decrypt(int threads) {
 
     volatile bool found = false;
     auto start = chrono::steady_clock::now();
@@ -49,7 +46,7 @@ void Decrypter::decrypt(int threads) {
             char *current_word_encrypted = crypt_r(fullDictionary[i].c_str(), salt.c_str(), &data);
 
             if (strcmp(current_word_encrypted, encrypted.c_str()) == 0) {
-                cout << "[✓] PASSWORD FOUND IN DICTIONARY: " << fullDictionary[i] << endl;
+                //cout << "[✓] PASSWORD FOUND IN DICTIONARY: " << fullDictionary[i] << endl;
                 found = true;
             }
         }
@@ -58,8 +55,15 @@ void Decrypter::decrypt(int threads) {
     if (found) {
         auto end = chrono::steady_clock::now();
         std::chrono::duration<double> elapsedSeconds = end - start;
-        cout << "[i] CPU Time: " << elapsedSeconds.count() << " seconds\n" <<  endl;
+        //cout << "[i] CPU Time: " << elapsedSeconds.count() << " seconds\n" <<  endl;
+        return elapsedSeconds.count();
     } else {
         cout << "[*] Password not found in dictionary!\n" << endl;
+        return 0;
     }
+}
+
+void Decrypter::setPassword(const string &password) {
+    this->encrypted = strdup(crypt(password.c_str(), salt.c_str()));
+    cout << "[*] Encrypted password: " << this->encrypted << endl;
 }

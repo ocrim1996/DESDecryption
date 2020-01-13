@@ -8,12 +8,12 @@ plt.figure(figsize=(8,5))
 words = ['sirpizza', '3kingdom', 'tyleisha', 'marumari', 'giacomix', 'dbcookie', 'Yessssss', 'Mypaypa1', '6Melissa', '1Mazzola']
 times_seq = [0.231341, 0.740162, 1.099185, 2.057434, 2.651718, 3.041978, 3.701794, 3.890734, 4.635460, 5.194617]
 times_cuda = [0.681015, 0.641720, 0.644346, 0.645845, 0.643087, 0.643216, 0.646316, 0.647170, 0.645394, 0.647059] # 128 blocchi / thread per blocco
-times_openmp = [0.895581, 0.301136, 1.4179, 0.182783, 1.91081, 0.996816, 0.986832, 2.00602, 1.93184, 1.41129] # 8 thread
+times_openmp = [0.832012, 1.07067, 1.35734, 0.472368, 2.20688, 0.343134, 1.56616, 0.419804, 1.22991, 1.82078] # 8 thread
 plt.plot(words, times_seq)
 plt.plot(words, times_cuda)
 plt.plot(words, times_openmp)
 plt.ylabel('Tempi (s)')
-plt.gca().legend(('Sequenziale','CUDA', 'OpenMP'), loc='upper left')
+plt.gca().legend(('Sequenziale','CUDA (128 blocchi)', 'OpenMP (32 Thread)'), loc='upper left')
 plt.tight_layout()
 plt.grid()
 plt.savefig('tempi.png')
@@ -55,16 +55,13 @@ plt.figure(figsize=(8,5))
 words = ['3kingdom', 'giacomix', '6Melissa']
 nThreads = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096]
 
-seq_3kingdom=1.03047
-tempi_3kingdom = [1.01924, 1.56739, 0.309739, 0.409104, 1.42765, 2.0312, 2.0312, 1.71969, 0.954556, 1.7443, 0.632172, 0.58017]
+tempi_3kingdom = [0.666503, 1.19207, 0.285334, 0.661375, 1.25394, 2.00221, 1.84419, 1.69569, 0.808561, 1.84429, 0.88455, 1.22803]
 speedup_3kingdom = [seq_3kingdom/i for i in tempi_3kingdom]
 
-seq_giacomix=4.02124
-tempi_giacomix = [3.44626, 2.51188, 1.90975, 2.35197, 2.14367, 1.95578, 2.11623, 2.06844, 2.11548, 1.87124, 2.00013, 2.64471]
+tempi_giacomix = [2.38582, 2.0866, 2.27441, 2.22935, 2.07361, 2.16398, 2.22033, 2.09397, 1.94362, 1.99642, 1.482312, 1.33628]
 speedup_giacomix = [seq_giacomix/i for i in tempi_giacomix]
 
-seq_6Melissa=6.16216
-tempi_6Melissa = [2.90196, 1.31437, 1.76301, 1.89436, 1.36377, 0.506136, 0.619697, 0.530121, 1.85259, 1.98874, 1.52196, 1.62909]
+tempi_6Melissa = [1.74243, 0.981246, 2.2642, 1.96153, 1.74995, 0.408785, 0.533524, 1.09762, 2.00256, 1.98084, 1.60031, 1.03923]
 speedup_6Melissa = [seq_6Melissa/i for i in tempi_6Melissa]
 
 
