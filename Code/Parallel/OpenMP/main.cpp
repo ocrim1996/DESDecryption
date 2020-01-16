@@ -9,7 +9,7 @@ using namespace std;
 
 #define DICTIONARY "dict_1500000.txt"
 
-double execute(Decrypter d, int threads, string password, string salt, int nAverage) {
+double execute(Decrypter d, int threads, int nAverage) {
 
     cout << "[*] Decrypting using password '" << password << "' and " << threads << " threads, averaging " << nAverage << " times..." << endl;
 
@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
         d.setPassword(password);
 
         for (auto &threads: nThreads) {
-            double time = execute(d, threads, password, salt, nAverage);
+            double time = execute(d, threads, nAverage);
             executionTimes.push_back(time);
         }
         
@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
     
     for (auto &password: passwords) {
         d.setPassword(password);
-        double time = execute(d, threads, password, salt, nAverage);
+        double time = execute(d, threads, nAverage);
         secondExecutionTimes.push_back(time);
     }
     
