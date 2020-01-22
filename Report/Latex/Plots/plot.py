@@ -7,13 +7,13 @@ from matplotlib import pyplot as plt
 plt.figure(figsize=(8,5))
 words = ['sirpizza', '3kingdom', 'tyleisha', 'marumari', 'giacomix', 'dbcookie', 'Yessssss', 'Mypaypa1', '6Melissa', '1Mazzola']
 times_seq = [0.231341, 0.740162, 1.099185, 2.057434, 2.651718, 3.041978, 3.701794, 3.890734, 4.635460, 5.194617]
-times_cuda = [0.681015, 0.641720, 0.644346, 0.645845, 0.643087, 0.643216, 0.646316, 0.647170, 0.645394, 0.647059] # 128 blocchi / thread per blocco
-times_openmp = [0.832012, 1.07067, 1.35734, 0.472368, 2.20688, 0.343134, 1.56616, 0.419804, 1.22991, 1.82078] # 8 thread
+times_cuda = [0.681015, 0.641720, 0.644346, 0.645845, 0.643087, 0.643216, 0.646316, 0.647170, 0.645394, 0.647059] # 128 blocchi e thread per blocco
+times_openmp = [0.832012, 1.07067, 1.35734, 0.472368, 2.20688, 0.343134, 1.56616, 0.419804, 1.22991, 1.82078] # 32 thread
 plt.plot(words, times_seq)
 plt.plot(words, times_cuda)
 plt.plot(words, times_openmp)
-plt.ylabel('Tempi (s)')
-plt.gca().legend(('Sequenziale','CUDA (128 blocchi)', 'OpenMP (32 Thread)'), loc='upper left')
+plt.ylabel('Tempo (s)')
+plt.gca().legend(('Sequenziale','CUDA (128 thread/blocco)', 'OpenMP (32 Thread)'), loc='upper left')
 plt.tight_layout()
 plt.grid()
 plt.savefig('tempi.png')
@@ -36,13 +36,12 @@ seq_6Melissa=times_seq[8]
 tempi_6Melissa = [8.625993, 4.316520, 2.065404, 1.095974, 0.646805, 0.650377, 0.651141]
 speedup_6Melissa = [seq_6Melissa/i for i in tempi_6Melissa]
 
-
 plt.plot(blocks, speedup_3kingdom)
 plt.plot(blocks, speedup_giacomix)
 plt.plot(blocks, speedup_6Melissa)
 
-plt.ylabel('Speedup versione parallela con CUDA')
-plt.xlabel('Numero di blocchi e numero di thread per blocco')
+plt.ylabel('Speedup CUDA')
+plt.xlabel('Numero di thread per blocco')
 plt.gca().legend(('3kingdom','giacomix', '6Melissa'), loc='upper left')
 plt.tight_layout()
 plt.grid()
@@ -64,12 +63,11 @@ speedup_giacomix = [seq_giacomix/i for i in tempi_giacomix]
 tempi_6Melissa = [1.74243, 0.981246, 2.2642, 1.96153, 1.74995, 0.408785, 0.533524, 1.09762, 2.00256, 1.98084, 1.60031, 1.03923]
 speedup_6Melissa = [seq_6Melissa/i for i in tempi_6Melissa]
 
-
 plt.plot(nThreads, speedup_3kingdom)
 plt.plot(nThreads, speedup_giacomix)
 plt.plot(nThreads, speedup_6Melissa)
 
-plt.ylabel('Speedup versione parallela con OpenMP')
+plt.ylabel('Speedup OpenMP')
 plt.xlabel('Numero di thread')
 plt.gca().legend(('3kingdom','giacomix', '6Melissa'), loc='upper right')
 plt.tight_layout()
